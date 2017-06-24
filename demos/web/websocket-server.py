@@ -270,9 +270,14 @@ class OpenFaceServerProtocol(WebSocketServerProtocol):
         #     return
 
         identities = []
-        # bbs = align.getAllFaceBoundingBoxes(rgbFrame)
-        bb = align.getLargestFaceBoundingBox(rgbFrame)
-        bbs = [bb] if bb is not None else []
+        if not self.training:
+
+            bbs = align.getAllFaceBoundingBoxes(rgbFrame)
+            
+        else:
+ 
+             bb = align.getLargestFaceBoundingBox(rgbFrame)
+             bbs = [bb] if bb is not None else []
         for bb in bbs:
             # print(len(bbs))
             landmarks = align.findLandmarks(rgbFrame, bb)
